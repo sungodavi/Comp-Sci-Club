@@ -17,9 +17,9 @@ class Dino(Sprite):
         self.height = height
         self.gravity = gravity
         self.screenDims = Rect((0, 0), screenDims)
-        
         self.image = pygame.image.load('Dino.png')
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        scale = self.height / self.image.get_rect().height
+        self.image = pygame.transform.scale(self.image, (int(scale * self.image.get_rect().width), self.height))
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
