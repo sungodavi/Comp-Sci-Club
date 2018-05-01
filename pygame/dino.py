@@ -8,7 +8,7 @@ import sys
 
 WHITE = 255, 255, 255
 BLACK = 0, 0, 0
-BACKGROUND = 200, 200, 200
+BACKGROUND = 0,0,0
 
 class Dino(Sprite):
     def __init__(self, pos, screenDims, jump_velocity=15, gravity=1, width=40, height=80, color=WHITE):
@@ -23,7 +23,7 @@ class Dino(Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-                
+        
         self.jump_velocity = jump_velocity
         self.jumping = False
         self.t = 0
@@ -60,7 +60,7 @@ class Block(Sprite):
         
 if __name__ == '__main__':
     pygame.init()
-    font = pygame.font.SysFont("Comic Sans MS", 20)
+    font = pygame.font.SysFont("Comic Sans MS", 30)
     
     screen_width = 700
     screen_height = 400
@@ -84,7 +84,9 @@ if __name__ == '__main__':
             blocks.add(block)
             
             buffer_start = time
-        pygame.event.pump()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit(pygame.quit())
         pressed = pygame.key.get_pressed()
         
         if pressed[K_UP] or pressed[K_SPACE]:
@@ -96,20 +98,21 @@ if __name__ == '__main__':
         if len(pygame.sprite.spritecollide(dino,blocks,False)) > 0:
             break
         
-        text = font.render("Score: " + str(time), True, WHITE)
-        screen.blit(text, (0,0))
-            
+           
         sprites.update()
         screen.fill(BACKGROUND)
+        text = font.render("Score: " + str(time), True, WHITE)
+        screen.blit(text, (0,0))
         sprites.draw(screen)
         pygame.display.flip()
     
     
     while not pressed[K_ESCAPE]:
         pygame.display.flip()
-        pygame.event.pump()
         pressed = pygame.key.get_pressed()
-        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pressed[K_ESCAPE] = False        
     sys.exit(pygame.quit())
     
         
