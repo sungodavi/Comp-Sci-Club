@@ -48,8 +48,10 @@ class Block(Sprite):
         self.size = size
         self.velocity = velocity
         
-        self.image = pygame.Surface([size, size])
-        self.image.fill(color)
+        self.image = pygame.image.load('cactus.png')
+        scale = self.size / self.image.get_rect().height
+        self.image = pygame.transform.scale(self.image, (int(scale * self.image.get_rect().width), self.size))
+        self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
